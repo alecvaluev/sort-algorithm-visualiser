@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 //import components
 import Button from './Button.jsx';
 import Header from './Header';
@@ -15,13 +15,14 @@ import { selectComparePair } from '../features/comparePair/comparePairSlice.js';
 import { selectPivot } from '../features/pivot/pivotSlice.js';
 import { createArray } from '../sorting-algorithms/utils';
 
+
 export default function Visualiser() {
     const dispatch = useDispatch();
   
-    const [screenDimensions, setScreenDimensions] = useState({
+    const screenDimensions = {
           height: window.innerHeight,
           width: window.innerWidth
-    });
+    };
     const array = useSelector(selectArrayState);
     const size = useSelector(selectSizeState);
     const swapPair = useSelector(selectSwapPair);
@@ -30,15 +31,19 @@ export default function Visualiser() {
     const darkMode = useSelector(selectDarkMode);
 
     const setBackground = darkMode? darkModeSettings.darkBackgroundColor : darkModeSettings.defaultBackgroundColor;
-    
+
+    const funcParams = {dispatch: dispatch, 
+      size: size,
+      height: screenDimensions.height
+    }
     useEffect(() => {
-      createArray(dispatch, screenDimensions.height, size);
+      createArray(funcParams);
     }, []);
 
     console.log('dark', darkMode)
     return (
         <div style={{backgroundColor: setBackground, height: '100vh'}}>
-            <Header/>
+            <Header createArray={createArray} paramObj={funcParams}/>
 
             {/* main body */}
             <div  
@@ -66,14 +71,14 @@ export default function Visualiser() {
             </div>
 
             <div className='position-absolute bottom-0 end-0 mb-5 me-5'>
-              <Button name='Create New Array' callFunction={createArray(dispatch, screenDimensions.height, size)} outline={true} notSorting={true}/>
+              <Button name='Create New Array' callFunction={createArray} funcParamObj={funcParams} outline={true} notSorting={true}/>
               <div className='mt-3 p-2 rounded float-right'
                     style={{
                       backgroundColor: darkMode? '#FFD700': 'purple',
                       color: darkMode? '#000' : '#fff',
                       width: 'min-content'
                     }}
-                   onClick={() => dispatch(toggle(!darkMode))}>{darkMode? 'LightMode': 'DarkMode'}</div>
+                   onClick={() => {dispatch(toggle(!darkMode))}}>{darkMode? 'LightMode': 'DarkMode'}</div>
             </div>
 
         </div>
