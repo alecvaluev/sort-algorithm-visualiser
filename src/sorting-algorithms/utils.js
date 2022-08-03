@@ -4,8 +4,11 @@ import { setSwapPair } from '../features/swapPair/swapPairSlice';
 import { setPivot, resetPivot } from '../features/pivot/pivotSlice';
 import { setRunning } from '../features/running/runningSlice';
 
+
 //function generates new values depending on height and size and pushes them into storage array
-export const createArray = (dispatch, height, size) => {
+export const createArray = (paramObj) => {
+    const {dispatch, size, height} = paramObj;
+
     const array = [];
     for(let i = 0; i < size; i++) {
       let randomNum = Math.floor(Math.random() * (height * 0.7) + 1);
