@@ -11,10 +11,8 @@ import { setSize, selectSizeState } from '../features/size/sizeSlice.js';
 import { setSpeed, selectSpeedState } from '../features/speed/speedSlice.js';
 import { selectRunningState } from '../features/running/runningSlice';
 import { selectDarkMode } from '../features/darkMode/darkModeSlice';
-//import helper function
-import { createArray } from '../sorting-algorithms/utils';
 
-export default function Header(){
+export default function Header({createArray, paramObj}){
     const dispatch = useDispatch();
 
     const isRunning = useSelector(selectRunningState);
@@ -28,7 +26,7 @@ export default function Header(){
     //set new size and create new array
     const handleSize = (e) => {
         dispatch(setSize(e.target.value));
-        createArray(dispatch, window.innerHeight, size);
+        createArray(paramObj);
     }
     //set new algorithm speed
     const handleSpeed = (e) => {
@@ -36,16 +34,16 @@ export default function Header(){
     }
     
     return (
-        <div style={{color: '#fff', backgroundColor: darkMode? darkModeSettings.darkBackgroundColorAlternative : darkModeSettings.defaultBackgroundColorAlternative}}>
+        <div style={{color: '#fff', backgroundColor: darkMode? darkModeSettings.darkBackgroundColorAlternative : darkModeSettings.defaultBackgroundColorAlternative }}>
             <div className='d-flex justify-content-around py-4 fw-bold'>
                 <div className='text-end'>
                 <div>
-                    <label className='pe-3'>Array Size</label>
-                    <input type='range' min='3' max='100' value={size} onChange={handleSize} disabled={isRunning}/>
+                    <label className='pe-3' for="sizeRange">Array Size</label>
+                    <input type='range' name="sizeRange" min='3' max='100' value={size} onChange={handleSize} disabled={isRunning} style={{color: `${darkModeSettings.defaultHighlight} !important`}}/>
                 </div>
                 <div>
-                    <label className='pe-3'>Algorithm Speed</label>
-                    <input type='range' min='0.5' max='150' step='0.5' value={speed} onChange={handleSpeed} disabled={isRunning}/>
+                    <label className='pe-3' for="speedRange">Algorithm Speed</label>
+                    <input type='range' name="speedRange" min='0.5' max='150' step='0.5' value={speed} onChange={handleSpeed} disabled={isRunning}/>
                 </div>
                 </div>
                 {
