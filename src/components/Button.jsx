@@ -14,7 +14,7 @@ params:
     outline - boolean value indicates the type of button
     notSorting - boolean value indicates if the purpose of the button is to call sorting algorithm or any other regular function
 */
-export default function Button({name, callFunction, outline = false, notSorting = false}){
+export default function Button({name, callFunction, funcParamObj = {}, outline = false, notSorting = false}){
     const dispatch = useDispatch();
 
     const isRunning = useSelector(selectRunningState);
@@ -35,7 +35,7 @@ export default function Button({name, callFunction, outline = false, notSorting 
                 }}
             onClick={() => {
                 if(notSorting){
-                    callFunction();
+                    callFunction(funcParamObj);
                 }
                 else if(!isRunning){
                     dispatch(setRunning(true));
