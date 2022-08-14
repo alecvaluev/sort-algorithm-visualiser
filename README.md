@@ -1,6 +1,7 @@
 # Sort Algorithms Visualiser
 
-The tools used in this project: React.js, Redux.js
+## Tools
+React.js, Redux.js, Bootstrap
 
 This project is built to help visualize the sorting logic of various sorting algorithms and 
 improve the understanding through visuals
