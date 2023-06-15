@@ -1,3 +1,4 @@
+//import React
 import React, { useState } from 'react';
 //import redux storage
 import { useSelector, useDispatch } from 'react-redux';
